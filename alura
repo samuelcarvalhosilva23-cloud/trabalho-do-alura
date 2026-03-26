@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Aventura Interativa</title>
+  <style>
+    /* Estilo básico para os passos */
+    .passo {
+      margin: 20px;
+      padding: 15px;
+      border: 1px solid #333;
+      display: none; /* Todos escondidos inicialmente */
+    }
+
+    .passo.ativo {
+      display: block; /* Somente o passo ativo aparece */
+    }
+
+    button {
+      margin: 5px;
+      padding: 8px 12px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Passo 1 -->
+  <div id="passo1" class="passo ativo">
+    <p>Você está no passo 1 da aventura.</p>
+    <button class="botao-avancar" data-avancar="passo2">Ir para o passo 2</button>
+  </div>
+
+  <!-- Passo 2 -->
+  <div id="passo2" class="passo">
+    <p>Você está no passo 2 da aventura.</p>
+    <button class="botao-voltar" data-voltar="passo1">Voltar para o passo 1</button>
+    <button class="botao-avancar" data-avancar="passo3">Ir para o passo 3</button>
+  </div>
+
+  <!-- Passo 3 -->
+  <div id="passo3" class="passo">
+    <p>Você está no passo 3 da aventura.</p>
+    <button class="botao-voltar" data-voltar="passo2">Voltar para o passo 2</button>
+  </div>
+
+  <script>
+    // Função para alternar passos
+    function mostrarPasso(atual, proximo) {
+      document.getElementById(atual).classList.remove('ativo');
+      document.getElementById(proximo).classList.add('ativo');
+    }
+
+    // Botões de avançar
+    document.querySelectorAll('.botao-avancar').forEach(botao => {
+      botao.addEventListener('click', () => {
+        const passoAtual = botao.parentElement.id;
+        const proximoPasso = botao.getAttribute('data-avancar');
+        mostrarPasso(passoAtual, proximoPasso);
+      });
+    });
+
+    // Botões de voltar
+    document.querySelectorAll('.botao-voltar').forEach(botao => {
+      botao.addEventListener('click', () => {
+        const passoAtual = botao.parentElement.id;
+        const passoAnterior = botao.getAttribute('data-voltar');
+        mostrarPasso(passoAtual, passoAnterior);
+      });
+    });
+  </script>
+
+</body>
+</html>
